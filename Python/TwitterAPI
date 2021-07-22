@@ -1,0 +1,91 @@
+""" Some practice using Twitter API  """
+
+
+import tweepy
+
+API_KEY = 'oOx7k4Q68BBBZIrs2J9BrhmJV'
+API_SECRET_KEY = 'qBp4RNC5ILd3DnJfOC16FhCYAko0XqNianJyzWREkhcBnyIdGH'
+ACCES_TOKEN = '1410158967465066496-oMUD4zPWEf8Yp01maiApXaBXOJ38p8'
+ACCES_SECRET_TOKEN = 'RhDWMuj5G7oyi4Q8M702RBhP3ZpFbyoHFHeoqXBLhE0RF'
+
+auth = tweepy.OAuthHandler(API_KEY, API_SECRET_KEY)
+auth.set_access_token(ACCES_TOKEN, ACCES_SECRET_TOKEN)
+
+api = tweepy.API(auth)
+# retrieve tweets
+mentions = api.mentions_timeline()
+
+for mention in mentions:
+    print(mention.text)
+
+# post tweet
+post = api.update_status(status = 'Hello twitter!!')
+
+# get tweet timeline
+timeline = api.home_timeline()
+
+for tweet in timeline:
+    print(tweet.text)
+
+#curate a collection of tweets /Search Tweets: 7 day*
+
+results = api.search_tweets(q = "@DumbraveanuIon2")
+
+for result in results:
+    print(result.text)
+
+# send a direct message
+api.send_direct_message(recipient_id = '', text = '', attachement_type = '', attachement_media_id = '')
+
+# delete direct message
+api.delete_direct_message(id = '')
+
+# get direct messages in the last 30 days
+api.get_direct_messages()
+
+# get a specific direct message
+api.get_direct_message(id = '')
+
+# manage account
+
+settings = api.get_settings()
+print(settings)
+
+#set settings : sleep time(time when he recives notification), time zone of the user, the language of the profile
+api.set_settings()
+
+# removes the profile banner
+api.remove_profile_banner()
+
+# updates : location, description, name , url
+api.update_profile(name = 'Dumbraveanu Ionut', description = 'cool!')
+
+# retruns a user's followers, if it's not specified than it will return followers of authentificated user
+api.get_followers()
+
+# returns a user's friends, if it's not specified than it will return followers of authentificated user
+api.get_friends()
+
+# returns information between two users
+api.get_friendship()
+
+# returns user objects
+api.lookup_users(screen_name = 'alfabetiu', user_id='')
+
+# search users
+api.search_users(q = 'alfabetiu', count= 50)
+
+# recieve information about a specific user
+api.get_user(user_id = '', screen_name = '')
+
+# follow a user
+api.create_friendship(screen_name = '', user_id='')
+
+# unfollow a user
+api.destroy_friendship(screen_name = '', user_id = '')
+
+# block user
+api.create_block(screen_name = '', user_id = '')
+
+# mute user
+api.create_mute(screen_name = '', user_id = '')
